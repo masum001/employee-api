@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Net.Http;
 using System.Web.Configuration;
+using EmployeeAPI.Models;
 
 
 namespace EmployeeAPI.Controllers
@@ -29,6 +30,43 @@ namespace EmployeeAPI.Controllers
             connection.Close();
 
             return Request.CreateResponse(HttpStatusCode.OK, aDataTable);
+        }
+
+        public string Post(Department aDepartment)
+        {
+            try
+            {
+                /*DataTable aDataTable = new DataTable();*/
+                string query = @"insert into Department values ('" + aDepartment.DepartmentName + @"')";
+
+                /*  using (var connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString))
+                  using (var command = new SqlCommand(query, connection))
+                  using (var dataAdapter = new SqlDataAdapter(command))
+                  {
+                      command.CommandType = CommandType.Text;
+                      dataAdapter.Fill(aDataTable);
+                  }*/
+
+                SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                return "Department Saved Successfully" ;
+                
+
+                
+            }
+            catch (Exception e)
+            {
+                return  ("Operation Failed");
+               
+            }
+
+          
+
         }
     }
 }

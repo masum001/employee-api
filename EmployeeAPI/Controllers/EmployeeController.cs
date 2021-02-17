@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Configuration;
 using System.Web.Http;
+using EmployeeAPI.Models;
 
 namespace EmployeeAPI.Controllers
 {
@@ -27,6 +28,11 @@ namespace EmployeeAPI.Controllers
             connection.Close();
 
             return Request.CreateResponse(HttpStatusCode.OK, aDataTable);
+        }
+
+        public string Post(Employee anEmployee)
+        {
+            string query = 
         }
     }
 }
