@@ -32,7 +32,50 @@ namespace EmployeeAPI.Controllers
 
         public string Post(Employee anEmployee)
         {
-            string query = 
+            try
+            {
+                string query = $@"insert into Employees(EmployeeName, Department, MailID, DOJ) 
+                                             values('{anEmployee.EmployeeName}','{anEmployee.Department}','{anEmployee.MailID}','{anEmployee.DOJ}')";
+
+                SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                return "Operation Successful";
+            }
+            catch (Exception e)
+            {
+                return $"Sorry Operation failed Error {e}";
+            }
+        }
+
+        public string Put(Employee anEmployee)
+        {
+            try
+            {
+                string query = "update Employees set EmployeeName = '" + anEmployee.EmployeeName + "'," +
+                               " Department = '" + anEmployee.Department + "', " +
+                               "MailID = '" + anEmployee.MailID + "'," +
+                               "DOJ = '" + anEmployee.DOJ + "' where EmployeeID = '"+anEmployee.EmployeeID+"'";
+
+                SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                return "Operation Successful";
+            }
+            catch (Exception e)
+            {
+                return $"Operation Failed {e}";
+            }
         }
     }
 }

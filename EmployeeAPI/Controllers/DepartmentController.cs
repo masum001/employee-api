@@ -68,5 +68,49 @@ namespace EmployeeAPI.Controllers
           
 
         }
+
+        public string Put(Department aDepartment)
+        {
+            try
+            {
+                string query = @"update Department set DepartmentName = ('" + aDepartment.DepartmentName + @"') where DepartmentID = '"+aDepartment.DepartmentID+"'";
+
+                SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                return "Operation Successful";
+            }
+            catch (Exception e)
+            {
+                return $"Operation Failed {e}";
+            }
+        }
+
+        public string Delete(int id)
+        {
+            try
+            {
+                string query = $"delete from Department where DepartmentID = " + id;
+
+                SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+
+                SqlCommand command  = new SqlCommand(query, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                return "Row Deleted";
+
+            }
+            catch (Exception e)
+            {
+                return $"Operation Failed {e}";
+            }
+        }
     }
 }
