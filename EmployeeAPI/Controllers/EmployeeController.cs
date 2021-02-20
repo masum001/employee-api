@@ -77,5 +77,26 @@ namespace EmployeeAPI.Controllers
                 return $"Operation Failed {e}";
             }
         }
+
+        public string Delete(int id)
+        {
+            try
+            {
+                string query = "delete from Employees where EmployeeId = " + id;
+                SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                return "Successfully deleted ";
+
+            }
+            catch (Exception e)
+            {
+                return $"Operation failed {e}"; 
+            }
+        }
     }
 }
