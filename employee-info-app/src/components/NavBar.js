@@ -16,7 +16,7 @@ const NavBar = () => {
 
     const classes = useStyles();
     return (
-        <div className={classes.root}>
+        <div className={classes.root} style={{ marginBottom : 10}}>
           <AppBar position="static">
             <Toolbar >
               <Typography className={classes.title} variant="h6">

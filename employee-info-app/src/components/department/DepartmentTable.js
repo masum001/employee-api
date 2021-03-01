@@ -9,6 +9,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const useStyles = makeStyles({
     table: {
@@ -17,19 +21,22 @@ const useStyles = makeStyles({
   });
   
 
-const Department = () => {
+const DepartmentTable = () => {
 
 const [ departments, setDepartments ] = useState("");
 
 const classes = useStyles();
-useEffect(()=>{
-    const getData = async()=>{
-        const {data} = await axios.get('https://localhost:44316/api/department')
-        console.log(data)
-        setDepartments(data);
-    }
+
+
+
+ useEffect(()=>{
+  const getData = async()=>{
+    const {data} = await axios.get('https://localhost:44316/api/department')
+  
+    setDepartments(data);
+  }
     getData();
-},[]);
+},[departments]);
 
 // const getData =async()=>{
 //     const {data} = await axios.get('https://localhost:44316/api/department')
@@ -37,6 +44,14 @@ useEffect(()=>{
 //     console.log(departments);
 // }
 // setDepartments(getData())
+
+
+const handleDelete=async(departmentID)=>{
+  const res = await axios.delete(`https://localhost:44316/api/department/${departmentID}`)
+  console.log(res)
+
+ 
+}
 
     return (departments.length)?(
      <TableContainer component={Paper}>
@@ -53,6 +68,12 @@ useEffect(()=>{
                   <TableRow key={department.DepartmentId}>
                         <TableCell align="center">{department.DepartmentId}</TableCell>
                         <TableCell align="center">{department.DepartmentName}</TableCell>
+                        <IconButton aria-label="delete" onClick={()=>handleDelete(department.DepartmentId)}>
+                           <DeleteIcon color="error"/>
+                        </IconButton>
+                        <IconButton  aria-label="edit">
+                           <EditIcon color="primary"/>
+                        </IconButton>
                   </TableRow>
               ))
           }
@@ -64,4 +85,4 @@ useEffect(()=>{
     ):(<div>No data found</div>)
 }
 
-export default Department
+export default DepartmentTable
