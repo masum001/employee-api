@@ -17,7 +17,7 @@ namespace EmployeeAPI.Controllers
         {
             DataTable aDataTable = new DataTable();
 
-            string query = @"SELECT * FROM Employees";
+            string query = @"SELECT EmployeeID, EmployeeName, Department, MailID, Convert(varchar(10), DOJ, 120) as DOJ from Employees";
 
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
 
